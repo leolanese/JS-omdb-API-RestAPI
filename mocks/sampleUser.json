@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Ahmad Abdul-Aziz",
+    "email": "Ahmad.abdulaziz37@gmail.com",
+    "city": "London",
+    "street": "x1"
+  },
+  {
+    "id": 2,
+    "name": "Ahmad Habib Hussein",
+    "email": "Ahmadhabibhussein@mail.com",
+    "city": "London",
+    "street": "x1"
+  },
+  {
+    "id": 3,
+    "name": "Abdullahi Aminu",
+    "email": "Aminuawesome@mail.com",
+    "city": "London",
+    "street": "x1"
+  },
+  {
+    "id": 4,
+    "name": "Idris Muhammad",
+    "email": "rismad@mail.com",
+    "city": "London",
+    "street": "x1"
+  }
+]

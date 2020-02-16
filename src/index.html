@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+	<link rel="stylesheet" href="../css/css.css">
+	<title></title>
+</head>
+
+	<body>
+		<div class="w3-container">
+				<div class="wrapper">
+					<input type="text" id="getTheomdbapiValue">
+					<input type="submit" id="getTheomdbapi" value="Send">
+				</div>
+
+				<p id="result"></p>
+		</div>
+
+		<script>
+			document.getElementById('getTheomdbapi').addEventListener('click', getTheomdbapi);
+
+			<!-- omdbapi -->
+			const url = 'http://www.omdbapi.com/?',
+						key = 'apikey=67982c39';
+			const theMovieDbAPI = url + key;
+			console.log('theMovieDbAPI :', theMovieDbAPI);
+
+			function template(result, users) {
+				console.table(users);
+
+				if (users.totalResults > 0) {
+ 					(users.Search).forEach((movie) => {
+							const { Title, Type, Year, Poster } = movie;
+							result +=
+								`<div class="w3-panel w3-leftbar w3-border w3-round-small w3-border-blue w3-margin">
+										<div class="mediaResult">
+										  <div class="image">
+										    <img class='movies' src='${Poster}'>
+										  </div>
+					            <ul class="w3-ul">
+					               <li><h3> ${Title} </h3></li>
+					               <li> Year : ${Year}</li>
+					               <li> Type : ${Type} </li>
+					            </ul>
+										</div>
+								</div>
+								`;
+						});
+					} else {
+					  	result += '<div class="col"><h2>Not values found. Try again!</h2></div>';
+					}
+				  document.getElementById('result').innerHTML = result;
+			}
+
+
+			async function getTheomdbapi() {
+				const getTheomdbapiValue = '&s=' + document.getElementById('getTheomdbapiValue').value;
+
+				await fetch(theMovieDbAPI + getTheomdbapiValue, {mode: 'cors'})
+					.then((res) => {
+						const contentType = res.headers.get( 'content-type' );
+						const status      = res.status;
+
+						if ( contentType && contentType.includes('application/json') && status === 200) {
+							console.table(res);
+							return res.json()
+						}
+						throw new TypeError( 'Format is not standard JSON.' );
+					})
+					.then((users) => {
+						let result = `<h2> Results from omdbapi RestAPI: </h2>`;
+
+						template(result, users)
+					})
+					.catch(function(error) {
+						console.log('Request failed', error);
+						throw new TypeError( 'Format is not standard JSON.' );
+					});
+			}
+		</script>
+
+	</body>
+
+</html>
